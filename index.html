@@ -9,7 +9,9 @@
         border: 1px solid black
     }
 </style>
+<link rel="stylesheet" type="text/css" href="chart.css"></link>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="http://d3js.org/d3.v3.min.js"></script>
 <script type="text/javascript">
 
 function showMatches(response) {
@@ -53,8 +55,10 @@ $().ready(function() {
 <div id="holder">
 
 </div>
-<div id="viz">
+
+<div class="chart">
 
 </div>
+<script src="chart.js"></script>
 </body>
 </html>
