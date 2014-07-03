@@ -11,27 +11,40 @@
 </style>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript">
-var word = "h_llo";
 
 function showMatches(response) {
     $("#viz").html(response);
 }
-
-function populateWord(word) {
+/*
+ for (var i in word) {
+ var ele = $("<span>" + word[i] + "</span>");
+ $(ele).hover(function() {
+ $.get("matches.html?partial=" + word, function(response) {
+ showMatches(response)
+ });
+ });
+ console.log(ele);
+ root.append(ele);
+ }
+ */
+function populateWord(len) {
     var root = $("#holder");
-    for (var i in word) {
-        var ele = $("<span>" + word[i] + "</span>");
-        $(ele).hover(function() {
-            $.get("matches.html?partial=" + word, function(response) {
-                showMatches(response)
-            });
+    var ele = $("<input type=text />");
+    $(ele).bind("change paste keyup", function() {
+        var word = $(ele).value;
+        var alpha = "abcdefghijklmnopqrstuvwxyz";
+        console.log(word);
+        $.get("matches.html?partial=" + word, function(response) {
+            var resp = $.parseJSON(response);
+            var percs = resp[1];
+            pushData(alpha.map(function(c) { percs[c] || 0.0 }));
         });
-        console.log(ele);
-        root.append(ele);
-    }
+    });
+    console.log(ele);
+    root.append(ele);
 }
 $().ready(function() {
-    populateWord(word);
+    populateWord(5);
 })
 
 </script>
