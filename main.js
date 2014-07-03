@@ -19,11 +19,16 @@ var x = d3.scale.ordinal()
     .domain(letters)
     .rangeRoundBands([0, width], .1)
 
-var bars = svg.selectAll('rect')
-    .data(data)
+function pushData(xs) {
+    var bars = svg.selectAll('rect').data(xs)
+    bars.exit().remove()
+    bars.enter().append('rect')
+        .attr('x', function(d, i) { return x(letters[i]); })
+        .attr('width', x.rangeBand())
+        .attr('height', y)
+        .attr('y', 0)
+    bars
+        .attr('height', y)
+}
 
-bars.enter().append('rect')
-    .attr('height', y)
-    .attr('y', height - y)
-    .attr('x', function(d, i) { return x(letters[i]); })
-    .attr('width', x.rangeBand())
+pushData(data)
