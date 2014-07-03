@@ -1,0 +1,47 @@
+<html>
+<head>
+
+<style>
+    #holder span {
+        font-size: 72px;
+        margin: 10px;
+        min-width: 50px;
+        border: 1px solid black
+    }
+</style>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript">
+var word = "h_llo";
+
+function showMatches(response) {
+    $("#viz").html(response);
+}
+
+function populateWord(word) {
+    var root = $("#holder");
+    for (var i in word) {
+        var ele = $("<span>" + word[i] + "</span>");
+        $(ele).hover(function() {
+            $.get("matches.html?partial=" + word, function(response) {
+                showMatches(response)
+            });
+        });
+        console.log(ele);
+        root.append(ele);
+    }
+}
+$().ready(function() {
+    populateWord(word);
+})
+
+</script>
+</head>
+<body>
+<div id="holder">
+
+</div>
+<div id="viz">
+
+</div>
+</body>
+</html>
